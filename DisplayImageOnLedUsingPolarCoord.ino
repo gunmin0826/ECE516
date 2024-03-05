@@ -35,8 +35,11 @@ bool real = false;
 bool imaginary = false;
 bool initialLoop = true; // used as a flag for operation that should be done only in the first loop
 long real_index = 0;
+long pReal = 0;
 long comp_index = 0;
+long pComp = 0;
 long motor_index = 0;
+long pMotor = 0;
 
 long realGoUpTotal=0;
 long imgGoUpTotal=0;
@@ -847,6 +850,27 @@ void loop()
   leds[real_index] |= CRGB(50,0,0);
   leds[comp_index] |= CRGB(0,50,0);
   leds[motor_index]|= CRGB(0,0,50);
+  // if we detect changes from the previous to current (Low-->high or high-->low)
+  if ((real_index != pReal) && (real_index > pReal)){
+    for (int i=pReal; i<real_index; i++){
+      leds[i] |= CRGB(50,0,0);
+    }
+  }
+  if ((real_index != pReal) && (real_index < pReal)){
+    for (int i=pReal; i>real_index; i--){
+      leds[i] |= CRGB(50,0,0);
+    }
+  }
+  if ((comp_index != pComp) && (comp_index > pComp)){
+    for (int i=pComp; i<comp_index; i++){
+      leds[i] |= CRGB(0,50,0);
+    }
+  }
+  if ((comp_index != pComp) && (comp_index < pComp)){
+    for (int i=pComp; i>comp_index; i--){
+      leds[i] |= CRGB(0,50,0);
+    }
+  }
 
 
 
